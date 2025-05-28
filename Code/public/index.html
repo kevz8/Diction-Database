@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- This meta tag ensures that the website renders correctly across different device sizes, enhancing mobile responsiveness. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Link to the external CSS stylesheet. Uncomment if you wish to customize or add styling. -->
+    <!-- <link rel="stylesheet" href="styles.css">   -->
+
+    <title>Database Application</title>
+</head>
+<body>
+    <!-- ===================================================================================== -->
+    <!-- Display the current status of the database connection. 
+         !!HERE TO HELP U DEBUGGING, NOT REQUIRED IN YOUR OWN PROJECT!!
+         -->
+    <h1>Database Connection Status: 
+        <!-- An in-line placeholder to display connection status. -->
+        <span id="dbStatus"> </span>
+        <!-- A loading GIF, will be hided once get the status. -->
+        <img id="loadingGif" class="loading-gif" src="loading_100px.gif" alt="Loading...">
+    </h1>
+
+    <br><hr><br> <!-- ========================================================================= -->
+
+    <table border="0.1" width="100%">
+        <tr>
+            <td width="33%" valign="top">
+
+    <!-- Show 'Demotable'. 
+        Data will be fetched and inserted here dynamically using JavaScript. -->
+    <h2>Show word</h2>
+    <table id="demotable" border="1">
+        <thead>
+            <tr>
+                <!--Table head, need to be adjusted accordingly to align with your own.-->
+                <th>Spelling</th>
+                <th># of Characters</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+</td>
+<td width="33%" valign="top">
+
+      <h2>Output</h2>
+      <div id="tables" class="table"></div>
+
+</td>
+<td width="33%" valign="top">
+
+    <h2>Show Languages</h2>
+    <table id="languageTable" border="1">
+        <thead>
+            <tr>
+                <!--Table head, need to be adjusted accordingly to align with your own.-->
+                <th>Name</th>
+                <th>Word Order</th>
+                <th>Ancestor</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+        <!-- A placeholder to show all tuples in Language_Family table. Updates after updating below -->
+
+    </table>
+</td>
+</tr>
+</table>
+
+    <br><hr><br> <!-- ========================================================================= -->
+
+    <table border="0.1" width="100%">
+        <tr>
+            <td width="50%" valign="top">
+
+    <h2>Reset Dictionary</h2>
+    <p>If you wish to reset the table, press the reset button. If this is the first time you're running this page, you MUST use reset</p>
+    <button id="resetDemotable"> reset </button> <br>
+    <!-- A placeholder to display messages related to the reset operation. -->
+    <div id="resetResultMsg"></div>
+
+    <br><hr><br> <!-- ========================================================================= -->
+
+
+    <h2>Add New Word </h2>
+    <form id="contextWord">
+        Word: <input type="text" id="context1" placeholder="Enter Word" required> <br><br>
+        Example Sentence: <input type="text" id="context2" placeholder="Enter Sentence" required> <br><br>
+        Sentence Source: <input type="text" id="context3" placeholder="Enter Source" required> <br><br>
+        Definition: <input type="text" id="context4" placeholder="Enter Definition" required> <br><br>
+        Language: <input type="text" id="context10" placeholder="Enter Language" required> <br><br>
+        Lexical Category: <input type="text" id="context5" placeholder="Enter Lexical Category" required> <br><br>
+        Region: <input type="text" id="context6" placeholder="Enter Region" required> <br><br>
+        Language Family: <input type="text" id="context8" placeholder="Enter Language Family" required> <br><br>
+        Language Word Order: <input type="text" id="context9" placeholder="Enter Language Word Order" required> <br><br>
+        Language Ancestor: <input type="text" id="context11" placeholder="Enter Ancestor" required> <br><br>
+        Ethnic Groups: <input type="text" id="context7" placeholder="Enter Ethnic Group" required> <br><br>
+
+        <button type="submit"> Submit </button> <br>
+    </form>
+    <!-- A placeholder to display messages related to the inserting context to word operation. -->
+    <div id="contextWordMsg"></div>
+
+    <br><hr><br> <!-- ========================================================================= -->
+
+    <h2> Get Definition for Word </h2>
+    <form id="wordDefinition">
+        Word: <input type="text" id="wordId" placeholder="Enter Word" required> <br><br>
+
+        <button type="submit"> find </button> <br>
+    </form>
+    <!-- A placeholder to display a table consisting of word and definition in output section id = "tables". -->
+    <div id="wordDefinitionMsg"></div>
+
+    <br><hr><br> <!-- ========================================================================= -->
+
+
+    <h2> Search Word(s) by substring and/or length</h2>
+    <p>If you wish to only search one attribute, leave the others blank. Case insensitive for substring. Must be a number for length.</p>
+    <form id="selectDemotable">
+        <label for="attribute1">Find word with </label>
+        <select id="attribute1">
+            <option value="Num_characters">length</option>
+            <option value="Spelling"> substring </option>
+        </select>
+         <input type="text" id="value1" placeholder="Value">
+
+    <p></p>
+        <label for="operation1">Operation:</label>
+        <select id="operation1">
+            <option value="AND">AND</option>
+            <option value="OR">OR</option>
+        </select>
+
+    <p></p>
+        <label for="attribute2">Find word with </label>
+        <select id="attribute2">
+            <option value="Num_characters">length</option>
+            <option value="Spelling">substring</option>
+        </select>
+         <input type="text" id="value2" placeholder="Value">
+
+    <p></p>
+        <label for="operation2">Operation:</label>
+        <select id="operation2">
+            <option value="AND">AND</option>
+            <option value="OR">OR</option>
+        </select>
+
+    <p></p>
+        <label for="attribute3">Find word with </label>
+        <select id="attribute3">
+            <option value="Num_characters">length</option>
+            <option value="Spelling">substring</option>
+        </select>
+        <input type="text" id="value3" placeholder="Value">
+        
+    <p></p>
+    <button type="submit">Search</button>
+    </form>
+
+
+
+     <!-- A placeholder to display a table consisting of all words that fit the criteria in output section id = "tables". -->
+    <div id="selectResultMsg"></div>
+
+    <!-- <br><hr><br> ========================================================================= -->
+</td>
+<td width="50%" valign="top">
+
+    <h2>Delete Word from Dictionary</h2>
+    <form id="deleteNameDemotable">
+        Word: <input type="text" id="deleteOldName" placeholder="Enter Word" required> <br><br>
+
+        <button type="submit"> delete </button> <br>
+    </form>
+    <!-- A placeholder to display messages related to the delete operation. -->
+    <div id="deleteNameResultMsg"></div>
+
+    <br><hr><br> <!-- ========================================================================= -->
+
+    <h2>Update Language Information </h2>
+    <p>The values are case sensitive and if you enter in the wrong case, the update statement will not do anything.</p>
+    <form id="updataNameDemotable">
+        Language: <input type="text" id="updateOldName" placeholder="Language name" required> <br><br>
+        <label for="updateSelect">Update Language</label>
+
+        <select name="updateSelect" id="updateSelect">
+            <option value="Word_order">Word Order</option>
+            <option value="Ancestor">Ancestor</option>
+        </select>
+        into <input type="text" id="updateNewName" placeholder="New Value" required> <br><br>
+
+        <button type="submit"> update </button> <br>
+    </form>
+    <!-- A placeholder to display messages related to the update operation. -->
+    <div id="updateNameResultMsg"></div>
+
+    <br><hr><br> <!-- ========================================================================= -->
+
+
+    <h2>View Language Related Tables</h2>
+    <button id="onlyLanguage">Language </button>
+    <button id="onlyAncestor"> Ancestor </button>
+    <button id="onlyWordOrder"> Word Order </button>
+    <!-- A placeholder to display the Language_Family table with Word_Order non-primary key attribute in outputs section. -->
+    <div id="wordOrdertMsg"></div>
+    <button id="wordOrder">Language Word Order </button>
+    <button id="ancestor">Language Ancestor </button>
+    <!-- A placeholder to display the Language_Family table with Ancestor non-primary key attribute in outputs section. -->
+    <div id="ancestorMsg"></div> 
+    <button id="ancestorWordOrder">Ancestor Word Order </button>
+    <button id="all"> All </button> 
+    <!-- A placeholder to display the Language_Family table with both non-primary key attributes in outputs section. -->
+    <div id="bothMsg"></div> 
+
+
+    <br><hr><br> <!-- ========================================================================= -->
+
+    <h2>Find longest word length in each Language</h2>
+    <button id="countDemotable"> find </button> <br><br>
+
+    <hr> <!-- ========================================================================= -->
+
+    <h2>Find the average word length in Languages with at least 2 words added</h2>
+    <button id="countDemotable1"> find </button> <br><br>
+
+    <hr> <!-- ========================================================================= -->
+
+    <h2>Find Languages with language average word length greater than total average word length</h2>
+    <button id="countDemotable2"> find </button> <br><br>
+
+    <hr> <!-- ========================================================================= -->
+
+    <h2>Find all languages that contain words in every defined lexical category.</h2>
+    <button id="divisionTable"> find </button> <br><br>
+    
+</td>
+</tr>
+</table>
+
+<br><hr><br> <!-- ========================================================================= -->
+
+<h2> Reference IPA Table </h2>
+    <h3> Consonants </h3>
+    <table border = 1>
+        <tr>
+            <th colspan="23">Places of articulation </th>
+        </tr>
+        <tr> 
+            <th ></th>
+            <th colspan="2">Bilabial</th>
+            <th colspan="2">Labiodental </th>
+            <th colspan="2">Dental </th>
+            <th colspan="2">Alveolar </th>
+            <th colspan="2"> Postalveolar </th>
+            <th colspan="2"> Retroflex </th>
+            <th colspan="2"> Palatal </th>
+            <th colspan="2"> Velar </th>
+            <th colspan="2"> Uvular </th>
+            <th colspan="2"> Pharyngeal </th>
+            <th colspan="2"> Glottal </th>
+        </tr>
+		<tr>
+			<th>Plosive</th>
+			<td>p</td>
+			<td>b</td>
+			<td colspan="2"></td>
+			<td colspan="2"></td>
+			<td>t</td>
+			<td>d</td>
+			<td colspan="2"></td>
+			<td>ʈ</td>
+			<td>ɖ</td>
+			<td>c</td>
+			<td>ɟ</td>
+			<td>k</td>
+			<td>g</td>
+			<td>q</td>
+			<td>ɢ</td>
+			<td colspan="2"></td>
+			<td>ʔ</td>
+			<td></td>
+		</tr>
+		<tr>
+			<th>Nasal</th>
+			<td></td>
+			<td>m</td>
+			<td></td>
+			<td>ɱ</td>
+			<td colspan="2"></td>
+			<td></td>
+			<td>n</td>
+			<td colspan="2"></td>
+			<td></td>
+			<td>ɳ</td>
+			<td></td>
+			<td>ɲ</td>
+			<td></td>
+			<td>ŋ</td>
+			<td></td>
+			<td>ɴ</td>
+			<td colspan="2"></td>
+			<td colspan="2"></td>
+		</tr>
+		<tr>
+			<th>Trill</th>
+			<td></td>
+			<td>ʙ</td>
+			<td colspan="2"></td>
+			<td colspan="2"></td>
+			<td></td>
+			<td>r</td>
+			<td colspan="2"></td>
+			<td colspan="2"></td>
+			<td colspan="2"></td>
+			<td colspan="2"></td>
+			<td></td>
+			<td>ʀ</td>
+			<td colspan="2"></td>
+			<td colspan="2"></td>
+		</tr>
+		<tr>
+			<th>Tap or Flap</th>
+			<td colspan="2"></td>
+			<td></td>
+			<td>ⱱ</td>
+			<td colspan="2"></td>
+			<td></td>
+			<td>ɾ</td>
+			<td colspan="2"></td>
+			<td></td>
+			<td>ɽ</td>
+			<td colspan="2"></td>
+			<td colspan="2"></td>
+			<td colspan="2"></td>
+			<td colspan="2"></td>
+			<td colspan="2"></td>
+		</tr>
+		<tr>
+			<th>Fricative</th>
+			<td>ɸ</td>
+			<td>β</td>
+			<td>f</td>
+			<td>v</td>
+			<td>θ</td>
+			<td>ð</td>
+			<td>s</td>
+			<td>z</td>
+			<td>ʃ</td>
+			<td>ʒ</td>
+			<td>ʂ</td>
+			<td>ʐ</td>
+			<td>ç</td>
+			<td>ʝ</td>
+			<td>x</td>
+			<td>ɣ</td>
+			<td>χ</td>
+			<td>ʁ</td>
+			<td>ħ</td>
+			<td>ʕ</td>
+			<td>h</td>
+			<td>ɦ</td>
+		</tr>
+		<tr>
+			<th>Lateral Fricative</th>
+			<td colspan="2"></td>
+			<td colspan="2"></td>
+			<td colspan="2"></td>
+			<td>ɬ</td>
+			<td>ɮ</td>
+			<td colspan="2"></td>
+			<td colspan="2"></td>
+			<td colspan="2"></td>
+			<td colspan="2"></td>
+			<td colspan="2"></td>
+			<td colspan="2"></td>
+			<td colspan="2"></td>
+		</tr>
+		<tr>
+			<th>Approximant</th>
+			<td colspan="2"></td>
+			<td></td>
+			<td>ʋ</td>
+			<td colspan="2"></td>
+			<td></td>
+			<td>ɹ</td>
+			<td colspan="2"></td>
+			<td></td>
+			<td>ɻ</td>
+			<td></td>
+			<td>j</td>
+			<td></td>
+			<td>ɰ</td>
+			<td colspan="2"></td>
+			<td colspan="2"></td>
+			<td colspan="2"></td>
+		</tr>
+		<tr>
+			<th>Lateral Approximant</th>
+			<td colspan="2"></td>
+			<td colspan="2"></td>
+			<td colspan="2"></td>
+			<td></td>
+			<td>l</td>
+			<td colspan="2"></td>
+			<td></td>
+			<td>ɭ</td>
+			<td></td>
+			<td>ʎ</td>
+			<td></td>
+			<td>ʟ</td>
+			<td colspan="2"></td>
+			<td colspan="2"></td>
+			<td colspan="2"></td>
+		</tr>
+    </table>
+    
+    <br><hr><br> <!-- ========================================================================= -->
+
+    <h3> Vowels </h3>
+    <img src="IPA_Vowels.jpg" alt="IPA Vowels table" height="350">
+    <p>
+        IPA Chart, http://www.internationalphoneticassociation.org/content/ipa-chart, 
+        available under a Creative Commons Attribution-Sharealike 3.0 Unported License. 
+        Copyright © 2015 International Phonetic Association.</p>
+
+    
+    <!-- ===================================================================================== -->
+    <!-- External JavaScript file that contains the functionality/logic for the operations above. -->
+    <script src="scripts.js"></script>
+</body>
+</html>
